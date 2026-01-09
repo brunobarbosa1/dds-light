@@ -8,7 +8,7 @@ public class Dds {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column(nullable = false, length = 155)
     private String tema;
@@ -32,7 +32,7 @@ public class Dds {
 
     public Dds() {}
 
-    public Dds(String id, String tema, String descricao, String palestrante, LocalDateTime dataInicio, LocalDateTime dataFim, StatusDds status) {
+    public Dds(Long id, String tema, String descricao, String palestrante, LocalDateTime dataInicio, LocalDateTime dataFim, StatusDds status) {
         this.id = id;
         this.tema = tema;
         this.descricao = descricao;
@@ -42,11 +42,11 @@ public class Dds {
         this.status = status;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
