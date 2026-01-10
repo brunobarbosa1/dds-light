@@ -11,7 +11,3 @@ CREATE TABLE dds (
 ALTER TABLE dds
 ADD CONSTRAINT chk_dds_status
 CHECK (status IN ('AGENDADO', 'CANCELADO', 'CONCLUIDO'));
-
-ALTER TABLE dds
-ADD CONSTRAINT chk_dds_datas
-CHECK (data_fim > data_inicio);

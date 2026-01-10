@@ -14,11 +14,7 @@ public record DdsRequest(
         @NotEmpty(message = "Nome do palestrante não pode ser nulo")
         @NotBlank
         String palestrante,
-        @NotEmpty(message = "Data de início não pode ser nula")
-        @NotBlank
         LocalDateTime dataInicio,
-        @NotEmpty(message = "Data fim não pode ser nula")
-        @NotBlank
         LocalDateTime dataFim
 ) {
 }

@@ -1,6 +1,7 @@
 package com.light.dds_light.mappers;
 
 import com.light.dds_light.dto.request.DdsRequest;
+import com.light.dds_light.dto.request.DdsUpdateRequest;
 import com.light.dds_light.dto.response.DdsResponse;
 import com.light.dds_light.entity.Dds;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class DdsMapper {
         return dds;
     }
 
-    public static void merge(Dds dds, DdsRequest request) {
+    public static void merge(Dds dds, DdsUpdateRequest request) {
         if (request.tema() != null) {
             dds.setTema(request.tema());
         }
@@ -42,9 +43,21 @@ public class DdsMapper {
                 dds.getTema(),
                 dds.getDescricao(),
                 dds.getPalestrante(),
-                dds.getDataFim(),
+                dds.getDataInicio(),
                 dds.getDataFim(),
                 dds.getStatus()
+        );
+    }
+
+    public static Dds toDdsUpdate(DdsUpdateRequest request) {
+        return new Dds(
+                null,
+                request.tema(),
+                request.descricao(),
+                request.palestrante(),
+                request.dataInicio(),
+                request.dataFim(),
+                null
         );
     }
 }
