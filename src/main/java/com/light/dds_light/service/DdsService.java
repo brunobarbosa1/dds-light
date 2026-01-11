@@ -3,11 +3,11 @@ package com.light.dds_light.service;
 import com.light.dds_light.dto.request.DdsRequest;
 import com.light.dds_light.dto.request.DdsUpdateRequest;
 import com.light.dds_light.dto.response.DdsResponse;
-import com.light.dds_light.entity.Dds;
-import com.light.dds_light.entity.StatusDds;
+import com.light.dds_light.entities.Dds;
+import com.light.dds_light.entities.StatusDds;
+import com.light.dds_light.exceptions.DdsNotFoundException;
 import com.light.dds_light.mappers.DdsMapper;
 import com.light.dds_light.repository.DdsRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,7 +41,7 @@ public class DdsService {
 
     public DdsResponse atualizar(Long id, DdsUpdateRequest request) {
         Dds dds = repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Dds não encontrado para ser atualizado"));
+                () -> new DdsNotFoundException("Dds não encontrado para ser atualizado"));
         DdsMapper.merge(dds, request);
 //        checarConflito(request.palestrante(), request.dataFim(), request.dataInicio(), dds.getId());
         return DdsMapper.toDdsResponse(repository.save(dds));
@@ -50,30 +50,30 @@ public class DdsService {
 
     public DdsResponse cancelar(Long id) {
         Dds dds = repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Dds não encontrado para ser cancelado"));
-        dds.setStatus(com.light.dds_light.entity.StatusDds.CANCELADO);
+                () -> new DdsNotFoundException("Dds não encontrado para ser cancelado"));
+        dds.setStatus(com.light.dds_light.entities.StatusDds.CANCELADO);
         return DdsMapper.toDdsResponse(repository.save(dds));
     }
 
 
     public DdsResponse concluir(Long id) {
         Dds dds = repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Dds não encontrado para ser concluido"));
-        dds.setStatus(com.light.dds_light.entity.StatusDds.CONCLUIDO);
+                () -> new DdsNotFoundException("Dds não encontrado para ser concluido"));
+        dds.setStatus(com.light.dds_light.entities.StatusDds.CONCLUIDO);
         return DdsMapper.toDdsResponse(repository.save(dds));
     }
 
 
     public DdsResponse buscarPorId(Long id) {
         Dds dds = repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Dds não encontrado"));
+                () -> new DdsNotFoundException("Dds não encontrado"));
         return DdsMapper.toDdsResponse(dds);
     }
 
 
     public void deletar(Long id) {
         Dds dds = repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Dds não encontrado para ser deletado"));
+                () -> new DdsNotFoundException("Dds não encontrado para ser deletado"));
         repository.delete(dds);
     }
 

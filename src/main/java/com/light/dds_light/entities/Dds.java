@@ -1,4 +1,4 @@
-package com.light.dds_light.entity;
+package com.light.dds_light.entities;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

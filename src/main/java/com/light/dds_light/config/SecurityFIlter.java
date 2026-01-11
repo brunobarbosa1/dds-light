@@ -1,0 +1,47 @@
+package com.light.dds_light.config;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.Optional;
+
+@Component
+public class SecurityFIlter extends OncePerRequestFilter {
+
+    private final TokenConfig tokenConfig;
+
+    public SecurityFIlter(TokenConfig tokenConfig) {
+        this.tokenConfig = tokenConfig;
+    }
+
+    /*
+    * Toda requisição que eu fizer no REST, vai cair aqui primeiro e ele irá fazer
+    * a validação do Token recebido.
+    * */
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String authorizedHeader = request.getHeader("Authorization");
+        if (Strings.isNotEmpty(authorizedHeader) && authorizedHeader.startsWith("Bearer ")) {
+            String token =  authorizedHeader.substring("Bearer ".length());
+            Optional<JWTUserData> optUser = tokenConfig.validateToken(token);
+
+            if (optUser.isPresent()) {
+                JWTUserData userData = optUser.get();
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userData, null, null);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            filterChain.doFilter(request, response);
+        }else{
+            filterChain.doFilter(request, response);
+        }
+    }
+}
