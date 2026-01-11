@@ -14,3 +14,7 @@ spring:
 
     flyway:
       enabled: true
+
+dds:
+  security:
+    secret: ${SECURITY_SECRET}

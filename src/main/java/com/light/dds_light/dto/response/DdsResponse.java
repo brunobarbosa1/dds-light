@@ -1,6 +1,6 @@
 package com.light.dds_light.dto.response;
 
-import com.light.dds_light.entity.StatusDds;
+import com.light.dds_light.entities.StatusDds;
 import java.time.LocalDateTime;
 
 public record DdsResponse(

@@ -3,7 +3,7 @@ package com.light.dds_light.mappers;
 import com.light.dds_light.dto.request.DdsRequest;
 import com.light.dds_light.dto.request.DdsUpdateRequest;
 import com.light.dds_light.dto.response.DdsResponse;
-import com.light.dds_light.entity.Dds;
+import com.light.dds_light.entities.Dds;
 import org.springframework.stereotype.Component;
 
 @Component
